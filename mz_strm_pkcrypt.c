@@ -164,7 +164,7 @@ int32_t mz_stream_pkcrypt_open(void *stream, const char *path, int32_t mode) {
 
         /* Older versions used 2 byte check, newer versions use 1 byte check. */
         MZ_UNUSED(verify1);
-        if ((verify2 != 0) && (verify2 != pkcrypt->verify2))
+        if ((verify2 != 0) && (pkcrypt->verify2 != 0) && (verify2 != pkcrypt->verify2))
             return MZ_PASSWORD_ERROR;
 
         pkcrypt->total_in += MZ_PKCRYPT_HEADER_SIZE;
