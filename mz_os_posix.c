@@ -119,13 +119,20 @@ void mz_os_utf8_string_delete(uint8_t **string) {
 
 #if defined(HAVE_ARC4RANDOM_BUF)
 int32_t mz_os_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     if (size < 0)
         return 0;
     arc4random_buf(buf, (uint32_t)size);
     return size;
+#endf
 }
 #elif defined(HAVE_ARC4RANDOM)
 int32_t mz_os_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     int32_t left = size;
     for (; left > 2; left -= 3, buf += 3) {
         uint32_t val = arc4random();
@@ -138,9 +145,13 @@ int32_t mz_os_rand(uint8_t *buf, int32_t size) {
         *buf = arc4random() & 0xFF;
     }
     return size - left;
+#endif
 }
 #elif defined(HAVE_GETRANDOM)
 int32_t mz_os_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     int32_t left = size;
     int32_t written = 0;
 
@@ -153,9 +164,13 @@ int32_t mz_os_rand(uint8_t *buf, int32_t size) {
         left -= written;
     }
     return size - left;
+#endif
 }
 #else
 int32_t mz_os_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     static unsigned calls = 0;
     int32_t i = 0;
 
@@ -169,6 +184,7 @@ int32_t mz_os_rand(uint8_t *buf, int32_t size) {
         buf[i++] = (rand() >> 7) & 0xff;
 
     return size;
+#endif
 }
 #endif
 

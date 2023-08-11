@@ -38,6 +38,8 @@ option(MZ_BUILD_FUZZ_TESTS "Builds minizip fuzzer executables" OFF)
 option(MZ_CODE_COVERAGE "Builds with code coverage flags" OFF)
 # Package management options
 set(MZ_PROJECT_SUFFIX "" CACHE STRING "Project name suffix for package managers")
+# Maze options
+option(MZ_DISABLE_RANDOM "Disable random" OFF)
 
 mark_as_advanced(MZ_FILE32_API MZ_PROJECT_SUFFIX)
 
@@ -602,6 +604,9 @@ if(MZ_SIGNING)
 endif()
 if(MZ_FILE32_API)
     list(APPEND MINIZIP_DEF -DMZ_FILE32_API)
+endif()
+if(MZ_DISABLE_RANDOM)
+    list(APPEND MINIZIP_DEF -DMZ_DISABLE_RANDOM)
 endif()
 
 # Include traditional PKWare encryption

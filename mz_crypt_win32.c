@@ -18,6 +18,9 @@
 /***************************************************************************/
 
 int32_t mz_crypt_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     HCRYPTPROV provider;
     int32_t result = 0;
 
@@ -31,6 +34,7 @@ int32_t mz_crypt_rand(uint8_t *buf, int32_t size) {
     }
 
     return mz_os_rand(buf, size);
+#endif
 }
 
 /***************************************************************************/

@@ -110,6 +110,9 @@ void mz_os_utf8_string_delete(uint8_t **string) {
 /***************************************************************************/
 
 int32_t mz_os_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     unsigned __int64 pentium_tsc[1];
     int32_t len = 0;
 
@@ -120,6 +123,7 @@ int32_t mz_os_rand(uint8_t *buf, int32_t size) {
     }
 
     return len;
+#endif
 }
 
 int32_t mz_os_rename(const char *source_path, const char *target_path) {

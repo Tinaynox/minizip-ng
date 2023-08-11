@@ -21,9 +21,13 @@
 /***************************************************************************/
 
 int32_t mz_crypt_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     if (SecRandomCopyBytes(kSecRandomDefault, size, buf) != errSecSuccess)
         return 0;
     return size;
+#endif
 }
 
 /***************************************************************************/

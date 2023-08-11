@@ -48,6 +48,9 @@ static void mz_crypt_init(void) {
 }
 
 int32_t mz_crypt_rand(uint8_t *buf, int32_t size) {
+#ifdef MZ_DISABLE_RANDOM
+    return ~size;
+#else
     int32_t result = 0;
 
     result = RAND_bytes(buf, size);
@@ -56,6 +59,7 @@ int32_t mz_crypt_rand(uint8_t *buf, int32_t size) {
         return MZ_CRYPT_ERROR;
 
     return size;
+#endif
 }
 
 /***************************************************************************/
