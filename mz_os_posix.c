@@ -126,7 +126,7 @@ int32_t mz_os_rand(uint8_t *buf, int32_t size) {
         return 0;
     arc4random_buf(buf, (uint32_t)size);
     return size;
-#endf
+#endif
 }
 #elif defined(HAVE_ARC4RANDOM)
 int32_t mz_os_rand(uint8_t *buf, int32_t size) {
