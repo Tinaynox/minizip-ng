@@ -5,7 +5,7 @@
 #                         schmieder.matthias@gmail.com
 #***************************************************************************
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.6)
 
 message(STATUS "Using CMake version ${CMAKE_VERSION}")
 
@@ -723,7 +723,7 @@ if(MZ_LZMA)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${MINIZIP_LIB} ${MINIZIP_DEP})
-target_link_directories(${PROJECT_NAME} PUBLIC ${MINIZIP_LBD})
+link_directories(PUBLIC ${MINIZIP_LBD})
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${STDLIB_DEF} ${MINIZIP_DEF})
 target_include_directories(${PROJECT_NAME} PRIVATE ${MINIZIP_INC})
 target_include_directories(${PROJECT_NAME} PUBLIC
