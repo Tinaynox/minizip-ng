@@ -200,7 +200,10 @@ endif()
 if(MZ_ZLIB)
     # Check if zlib is present
     if(NOT MZ_FORCE_FETCH_LIBS)
+        # Avoid picking up unrelated zlib/headers from PATH (e.g. MSYS2/MinGW installs)
+        set(CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH OFF)
         find_package(ZLIB QUIET)
+        unset(CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH)
         set(ZLIB_VERSION ${ZLIB_VERSION_STRING})
     endif()
 
